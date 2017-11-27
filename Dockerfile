@@ -1,4 +1,4 @@
-FROM mritd/openjdk:8-144-01
+FROM mritd/openjdk:8
 
 MAINTAINER mritd <mritd1234@gmail.com>
 
