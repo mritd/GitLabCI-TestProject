@@ -1,0 +1,37 @@
+# 调试开启
+#before_script:
+#  - pwd
+#  - env
+
+cache:
+  key: $CI_PROJECT_NAME/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
+  paths:
+    - build
+
+stages:
+  - build
+  - deploy
+
+
+auto-build:
+  image: mritd/build:2.1.1
+  stage: build
+  script:
+    - gradle --no-daemon clean assemble
+  tags:
+    - test
+
+
+deploy:
+  image: mritd/docker-kubectl:v1.7.4
+  stage: deploy
+  script:
+    -
+  tags:
+    - dohko26
+  only:
+    - master
+    - develop
+    - /^chore.*$/
+
+
