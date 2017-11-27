@@ -45,7 +45,7 @@ bootRepackage {
 
 		println("Generate Docker image tag...")
 		envFile.append("export BUILD_DATE=`date +%Y%m%d%H%M%S`\n")
-		envFile.append("export IMAGE_NAME=mritd/TestProject:`echo \${CI_BUILD_REF_NAME} | tr '/' '-'`-`echo \${CI_COMMIT_SHA} | cut -c1-8`-\${BUILD_DATE}\n")
-		envFile.append("export LATEST_IMAGE_NAME=mritd/TestProject:latest\n")
+		envFile.append("export IMAGE_NAME=mritd/test:`echo \${CI_BUILD_REF_NAME} | tr '/' '-'`-`echo \${CI_COMMIT_SHA} | cut -c1-8`-\${BUILD_DATE}\n")
+		envFile.append("export LATEST_IMAGE_NAME=mritd/test:latest\n")
 	}
 }
