@@ -30,3 +30,22 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+bootRepackage {
+
+	mainClass = 'me.mritd.TestProject.TestProjectApplication'
+	executable = true
+
+	doLast {
+		File envFile = new File("build/tmp/PROJECT_ENV")
+
+		println("Create ${archivesBaseName} ENV File ===> " + envFile.createNewFile())
+		println("Export ${archivesBaseName} Build Version ===> ${version}")
+		envFile.write("export PROJECT_BUILD_FINALNAME=${archivesBaseName}-${version}\n")
+
+		println("Generate Docker image tag...")
+		envFile.append("export BUILD_DATE=`date +%Y%m%d%H%M%S`\n")
+		envFile.append("export IMAGE_NAME=mritd/TestProject:`echo \${CI_BUILD_REF_NAME} | tr '/' '-'`-`echo \${CI_COMMIT_SHA} | cut -c1-8`-\${BUILD_DATE}\n")
+		envFile.append("export LATEST_IMAGE_NAME=mritd/TestProject:latest\n")
+	}
+}

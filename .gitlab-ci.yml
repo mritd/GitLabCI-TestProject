@@ -26,9 +26,15 @@ deploy:
   image: mritd/docker-kubectl:v1.7.4
   stage: deploy
   script:
-    -
+    - source build/tmp/PROJECT_ENV
+    - docker build -t ${IMAGE_NAME} --build-arg PROJECT_BUILD_FINALNAME=${PROJECT_BUILD_FINALNAME} .
+#    - docker push ${IMAGE_NAME}
+    - docker tag ${IMAGE_NAME} ${LATEST_IMAGE_NAME}
+#    - docker push ${LATEST_IMAGE_NAME}
+    - docker rmi ${IMAGE_NAME} ${LATEST_IMAGE_NAME}
+#    - kubectl --kubeconfig ${KUBE_CONFIG} set image deployment/test test=$IMAGE_NAME
   tags:
-    - dohko26
+    - test
   only:
     - master
     - develop
