@@ -1,13 +1,13 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.8.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '1.5.8.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
@@ -20,32 +20,32 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 bootRepackage {
 
-	mainClass = 'me.mritd.TestProject.TestProjectApplication'
-	executable = true
+    mainClass = 'me.mritd.TestProject.TestProjectApplication'
+    executable = true
 
-	doLast {
-		File envFile = new File("build/tmp/PROJECT_ENV")
+    doLast {
+        File envFile = new File("build/tmp/PROJECT_ENV")
 
-		println("Create ${archivesBaseName} ENV File ===> " + envFile.createNewFile())
-		println("Export ${archivesBaseName} Build Version ===> ${version}")
-		envFile.write("export PROJECT_BUILD_FINALNAME=${archivesBaseName}-${version}\n")
+        println("Create ${archivesBaseName} ENV File ===> " + envFile.createNewFile())
+        println("Export ${archivesBaseName} Build Version ===> ${version}")
+        envFile.write("export PROJECT_BUILD_FINALNAME=${archivesBaseName}-${version}\n")
 
-		println("Generate Docker image tag...")
-		envFile.append("export BUILD_DATE=`date +%Y%m%d%H%M%S`\n")
-		envFile.append("export IMAGE_NAME=mritd/test:`echo \${CI_BUILD_REF_NAME} | tr '/' '-'`-`echo \${CI_COMMIT_SHA} | cut -c1-8`-\${BUILD_DATE}\n")
-		envFile.append("export LATEST_IMAGE_NAME=mritd/test:latest\n")
-	}
+        println("Generate Docker image tag...")
+        envFile.append("export BUILD_DATE=`date +%Y%m%d%H%M%S`\n")
+        envFile.append("export IMAGE_NAME=mritd/test:`echo \${CI_BUILD_REF_NAME} | tr '/' '-'`-`echo \${CI_COMMIT_SHA} | cut -c1-8`-\${BUILD_DATE}\n")
+        envFile.append("export LATEST_IMAGE_NAME=mritd/test:latest\n")
+    }
 }
