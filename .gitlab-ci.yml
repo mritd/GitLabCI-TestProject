@@ -36,6 +36,7 @@ deploy:
 #    - kubectl --kubeconfig ${KUBE_CONFIG} set image deployment/test test=$IMAGE_NAME
   tags:
     - test
+  when: manual
   only:
     - master
     - develop
