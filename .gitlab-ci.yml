@@ -1,7 +1,7 @@
 # 调试开启
-#before_script:
-#  - pwd
-#  - env
+before_script:
+  - pwd
+  - env
 
 cache:
   key: $CI_PROJECT_NAME/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
